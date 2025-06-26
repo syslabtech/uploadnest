@@ -6,6 +6,10 @@ from app.routes import router
 import logging
 from contextlib import asynccontextmanager
 import os
+from fastapi.responses import JSONResponse
+from fastapi.exception_handlers import RequestValidationError
+from fastapi.exceptions import RequestValidationError as FastAPIRequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 logging.basicConfig(
     level=logging.INFO,
@@ -45,6 +49,17 @@ app.add_middleware(
     ],
 )
 app.add_middleware(SecureHeadersMiddleware)
+
+# Add custom 404 and error handlers to always return JSON
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    if exc.status_code == 404:
+        return JSONResponse(status_code=404, content={"detail": "Not Found", "error": True})
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail, "error": True})
+
+@app.exception_handler(FastAPIRequestValidationError)
+async def validation_exception_handler(request, exc):
+    return JSONResponse(status_code=422, content={"detail": exc.errors(), "error": True})
 
 if __name__ == "__main__":
     import uvicorn
