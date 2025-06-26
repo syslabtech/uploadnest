@@ -1,0 +1,11 @@
+node_modules/
+build/
+dist/
+
+.vscode/
+.DS_Store
+Thumbs.db
+
+.env
+*.log
+REMOVE_THESE_FILES.txt

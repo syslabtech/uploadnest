@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  image: node:22-alpine
+  script:
+    - npm ci --omit=dev
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+
+test:
+  stage: test
+  image: node:22-alpine
+  script:
+    - npm ci --omit=dev
+    - npm run test -- --watchAll=false
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy step (customize for your environment)"
+  when: manual

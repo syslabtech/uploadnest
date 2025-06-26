@@ -1,0 +1,34 @@
+name: Frontend CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --omit=dev
+      - run: npm run build
+      - name: Build Docker image
+        run: docker build -t ${{ github.repository }}-frontend:latest .
+      # Uncomment and configure below to push to a registry
+      # - name: Log in to registry
+      #   run: echo ${{ secrets.REGISTRY_PASSWORD }} | docker login <registry-url> -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+      # - name: Push Docker image
+      #   run: docker push <registry-url>/${{ github.repository }}-frontend:latest
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --omit=dev
+      - run: npm test -- --watchAll=false
