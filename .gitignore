@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.egg-info/
+
+# Environment
+.env
+# .env.*
+
+# VSCode
+.vscode/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ignore test and temp
+*.bak
+*.swp
+*.tmp
+
+# Ignore build artifacts
+/build/
+/dist/
+
+# Ignore coverage
+.coverage
+htmlcov/
+
+# Ignore pip
+pip-wheel-metadata/
+
