@@ -1,4 +1,4 @@
-# UploadNest – Monorepo Overview
+# UploadNest – Overview
 
 A secure, scalable platform for chunked file uploads, GitLab repository storage, and PostgreSQL metadata, with a modern React frontend and FastAPI backend. This root README is for the **prod** branch, which coordinates both frontend and backend deployments for **UploadNest**.
 
