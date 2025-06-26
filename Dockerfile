@@ -12,7 +12,7 @@ FROM node:22-alpine as production
 WORKDIR /app
 RUN npm install -g serve
 COPY --from=build /app/build ./build
-RUN addgroup -g 10001 appgroup && adduser -D -u 10001 -G appgroup appuser
-USER 10001
-EXPOSE 80
-CMD ["serve", "-s", "build", "-l", "80"]
+RUN addgroup -g 10014 appgroup && adduser -D -u 10014 -G appgroup appuser
+USER 10014
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000"]
