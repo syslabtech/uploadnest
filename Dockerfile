@@ -14,6 +14,9 @@ WORKDIR /usr/share/nginx/html
 RUN addgroup -g 10001 appgroup && adduser -D -u 10001 -G appgroup appuser
 COPY --from=build /app/build .
 COPY nginx.conf /etc/nginx/nginx.conf
+# Create and set permissions for nginx cache, log, and run directories for non-root user
+RUN mkdir -p /var/cache/nginx /var/log/nginx /var/run \
+    && chown -R appuser:appgroup /var/cache/nginx /var/log/nginx /var/run
 RUN touch .env && chmod 600 .env && chown appuser:appgroup .env
 USER 10001
 EXPOSE 80
