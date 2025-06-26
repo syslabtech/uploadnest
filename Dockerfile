@@ -2,6 +2,7 @@
 FROM node:22-alpine as build
 WORKDIR /app
 COPY package.json package-lock.json ./
+RUN npm install -g npm@11.4.2 && npm --version  # Ensure npm 11.4.2 is used
 RUN npm ci --omit=dev --prefer-offline --no-audit --progress=false
 COPY . .
 RUN npm run build
